@@ -1,0 +1,25 @@
+#!/bin/awk -f
+BEGIN{
+    words = 0;
+    totlen = 0;
+}
+
+{
+    words = NF;
+    #print words;
+    for (i=1; i<=NF; i++){
+	#print $i "\t" length($i);
+	totlen += length($i);
+	#print totlen;
+    }
+    totlen += NF;
+    if (words > 0){
+        print int(totlen/words);
+    }
+}
+
+readarray f
+first=$(echo $f |wc -w )
+second=$(echo $f | wc -c )
+k=$(( second/first ))
+echo $k

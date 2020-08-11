@@ -1,0 +1,26 @@
+#!/bin/awk -f 
+BEGIN{
+    FS = ",";
+    min = 10000;
+    i =0;
+    price[""]=0;
+    count = 0;
+}
+{
+    if (NR == 1){
+	next;                  #keeping NR out as NR>1 
+    }                          #resulted in printing
+    if ($3 < min){             # of all input lines
+	min = $3;
+    }
+    price[i] = $3;
+    i++;
+}
+END{
+    for (j=0; j<i; j++){
+	if (price[j] == min) {
+	    count++;
+	}
+    }
+    print count;
+}    

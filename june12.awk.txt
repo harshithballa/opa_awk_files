@@ -1,0 +1,66 @@
+#!/bin/awk -f
+BEGIN{
+	FS = ","; res[""]=0; i=0;  j=0;
+}
+
+{
+	if (NR == 1){
+		next;
+	}
+	if ($3 > 50 && $4 > 50 && $3+$4 >= 150){
+		res[i] = $1 " " $2 " " ($3+$4)/2;
+		i++;
+	}
+}
+
+END{
+	for(j=0; j<i; j++){
+		print res[j];
+	}
+}
+
+#awk -f june12.awk june12dat | sort -rk3
+
+*****************************************
+
+#!/bin/awk -f
+BEGIN{
+	FS = ","; res[""]=0; i=0;  j=0; avg[""]=0; k=0;
+	t= 0; r=0; l=0;
+}
+
+{
+	if (NR == 1){
+		next;
+	}
+	if ($3 > 50 && $4 > 50 && $3+$4 >= 150){
+		res[i] = $1 " " $2;
+		avg[i] = ($3+$4)/2;
+		i++;
+	}
+}
+
+END{
+	for (j=0; j<i-1; j++){
+	for (k=0; k<i-j-1; k++){
+		if (avg[k] < avg[k+1]){
+			t = avg[k];
+			avg[k] = avg[k+1];
+			avg[k+1] = t;
+			r = res[k];
+			res[k] = res[k+1];
+			res[k+1] = r;
+		}
+	}
+	}
+	for (l=0; l<i; l++){
+		print res[l] " " avg[l];
+	}
+}
+
+
+
+
+read
+
+awk 'BEGIN{FS=","} { if($3>50 && $4>40) { avg=($3+$4)/2; if(avg>=75) print $1,$2,avg}}'|sort -k3 -nr

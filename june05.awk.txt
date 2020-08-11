@@ -1,0 +1,61 @@
+#!/bin/awk -f
+BEGIN{
+    FS = ","; res[""] = 0; i=0; j=0; 
+}
+{
+    if (NR == 1){
+	next;
+    }
+    if ($3 + $4 > 100){
+	res[i] =$1 " "  $2 " " $3+$4;
+        #print res[i];
+	i++;
+    }
+}
+END{
+    for (j=0; j<i; j++){
+	print res[j];
+    }
+}
+
+
+awk -f june05.awk june05dat | sort -r -k3|awk '{print $1 " " $2}'
+
+*************************************************
+#!/bin/awk -f
+BEGIN{
+    FS=","; res[""]=0; marks[""]=0; i=0; j=0; k=0; t=0; m=0; l=0;
+}
+{
+    if (NR==1){
+	next;
+    }
+    if ($3 + $4 > 100){
+	res[i] = $1 " " $2;
+        marks[i] = $3+$4;
+	i++;
+    }
+}
+END{
+    for (j=0; j<i-1; j++){
+	for (k=0; k<i-j-1; k++){
+	    if ( marks[k] < marks[k+1] ){
+		t = res[k];
+		res[k] = res[k+1];
+		res[k+1] = t;
+		m = marks[k];
+		marks[k] = marks[k+1];
+		marks[k+1] = m;
+	    }
+	}
+    }
+    for ( l = 0; l<i; l++){
+	print res[l];
+    }
+}
+
+
+
+read
+
+awk -F "," '{s=$3+$4; if (s>99) {print $1,$2,s}}'| sort -k3rn|cut -d ' ' -f1,2

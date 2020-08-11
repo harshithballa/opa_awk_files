@@ -1,0 +1,13 @@
+#!/bin/awk -f 
+BEGIN{
+	FS = ",";
+}
+{
+	if ($3=="Python" && $4=="Oracle"){
+		print $1 "&" $2 "&" $3 "&" $4;
+	}
+}
+
+
+
+awk -f july17.awk july17dat | sort -k2 -t "|"

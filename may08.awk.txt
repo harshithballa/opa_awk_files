@@ -1,0 +1,40 @@
+#!/bin/awk -f
+BEGIN{
+    c = 0;
+    a[""]=0;
+    i = 0;
+    es= 0;
+    os=0;
+}
+
+{
+    if (NR == 1){
+        c = $1;
+    }
+    else{
+	a[i] = $1;
+	#print a[i];
+	i++;
+	if (i == c){
+	    exit;
+	}
+    }
+}
+END{
+    for (j=0; j<4; j++){
+	ele = a[j];
+	if (ele %2 == 0){
+	    es += ele*ele;
+	}
+	else {
+	    os += ele*ele;
+	}
+    }
+    print es - os ;
+}
+
+
+
+#!/bin/bash
+read
+awk 'BEGIN{e=0;o=0} {if ($0%2==0) {e+=$0*$0} else { o+=$0*$0}} END{print (e-o)}'
